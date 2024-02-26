@@ -1,3 +1,6 @@
+[default]
+api_secret="1234"
+
 [development]
 address = "localhost"
 port = 8000
@@ -13,5 +16,3 @@ address = "0.0.0.0"
 port = 8000
 log = "critical"
 
-[global]
-api_secret="1234"
