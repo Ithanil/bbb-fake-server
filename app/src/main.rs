@@ -4,6 +4,8 @@ use rocket::State;
 use rocket::fairing::AdHoc;
 use rocket::serde::Deserialize;
 
+mod checksum;
+
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
 struct Config {
@@ -18,8 +20,14 @@ fn index() -> &'static str {
 #[get("/getMeetings?<checksum>")]
 fn get_meetings(checksum: &str, config: &State<Config>) -> String {
     let secret = &config.api_secret;
-    format!("checksum A: {checksum}, checksum B: {secret}")
+    if checksum::validate_checksum(checksum, "getMeetings", "", secret) {
+        format!("checksum {checksum} is valid")
+    }
+    else {
+        format!("checksum {checksum} is invalid")
+    }
 }
+
 
 #[launch]
 fn rocket() -> _ {
