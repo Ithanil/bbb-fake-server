@@ -4,7 +4,8 @@ use rocket::State;
 use rocket::fairing::AdHoc;
 use rocket::serde::Deserialize;
 
-mod checksum;
+mod api;
+use api::checksum;
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
